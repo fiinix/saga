@@ -103,16 +103,16 @@ $(function() {
 		currentHour = now.getHours(),
 		body = $('body'),
 		editor = $('.editor'),
-		counter = $('.counter'),
-		content_div = editor,
-		content_text,
-		char_count = content_div.text().length,
-		word_count = 0;
+		counter = $('.counter');
 
 	if (currentHour >= 6 && currentHour <= 18)
 		body.addClass('day-mode');
 
 	function wordCount() {
+		var content_div = editor,
+		content_text,
+		char_count = content_div.text().length,
+		word_count = 0;
 
 		// if no characters, words = 0
 		if (char_count != 0)
