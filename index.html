@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Author</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+<style>
+
+	*,
+	*::before,
+	*::after {
+
+		box-sizing: border-box;
+
+	}
+	
+	body {
+
+		background-color: #eee;
+		color: #222;
+
+		font: normal 400 1.25em/1.4 'Inconsolata';
+
+		/*-moz-transition: background-color 300ms ease-in-out 0ms;*/
+		transition: background-color 300ms ease-on-out 0ms;
+		/*transition: background-color 300ms ease-on-out 0ms;*/
+		-moz-transition: all 4000ms ease-in-out 0ms;
+		transition: all 4000ms ease-in-out 0ms;
+
+	}
+
+	.night-mode {
+
+		/* 030917 */
+		/* 000418, 000410, 000208 */
+		
+		background-color: #000418;
+		color: #ccc;
+
+	}
+
+	.counter {
+
+		padding: 0.5em 1em 5em 5em;
+
+		position: fixed;
+		top: 0;
+		right: 0;
+
+		font-size: 0.7em;
+
+		opacity: 0.5;
+
+		cursor: pointer;
+
+	}
+
+	.editor {
+
+		width: 100%;
+		min-height: 100vh;
+		/*height: 100%;*/
+		max-width: 32em;
+		margin: 4.5em auto;
+
+		word-wrap: break-word;
+
+		cursor: pointer;
+
+		position: relative;
+
+	}
+
+	textarea {
+
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		width: 100%;
+		height: 100%;
+
+		resize: none;
+		/*overflow-y: hidden;*/
+
+		font-size: inherit;
+		font-family: inherit;
+		font-style: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+
+		border: 0;
+		background-color: transparent;
+
+	}
+
+	p {
+
+		margin: 0 0 1em 0;
+
+	}
+
+</style>
+
+</head>
+<body>
+
+	<div class="counter">
+		
+	</div>
+
+	<div class="editor" contenteditable><p>Hello Dave...</p></div>
+	<!-- <div class="editor">
+	<textarea class="editor" name="editor" id="editor" cols="30" rows="10">Hello Dave...</textarea>
+	</div> -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script>
+$(function() {
+
+	var now = new Date(),
+		hours = now.getHours(),
+		body = $('body'),
+		editor = $('.editor'),
+		counter = $('.counter');
+
+	if (hours < 24 && hours > 16)
+		console.log(hours);
+		body.addClass('night-mode');
+
+	function wordCount() {
+		var content_div = editor,
+			content_text,
+		char_count = content_div.text().length,
+		word_count = 0;
+
+		// if no characters, words = 0
+		if (char_count != 0)
+		content_div.children().each(function(index, el) {
+		content_text += $(el).text()+"\n";
+		});
+		// if there is content, splits the text at spaces (else displays 0 words)
+		console.log(content_text);
+		if (typeof content_text !== "undefined")
+		word_count = content_text.split(/\s+/).length -1;
+		// words_count = content_text.trim().replace(/\s+/, ' ').split(' ').length;
+		counter.html(word_count + " words &nbsp;&bull;&nbsp; " + char_count + " characters");
+	}
+
+	// function wordCount(){
+	// 	var txtVal = $('.editor').val();
+	// 	var words = txtVal.trim().replace(/\s+/gi, ' ').split(' ').length;
+	// 	var chars = txtVal.length;
+	// 	if(chars===0){words=0;}
+	// 	$('.counter').html(words +' words&nbsp;-&nbsp;'+ chars +' characters');
+	// }
+
+	wordCount();
+	
+
+	counter.click(function() {
+		body.toggleClass('night-mode');
+	});
+
+
+	editor.on('keyup propertychange paste', function(){ 
+		wordCount();
+	});
+
+
+});
+</script>
+
+</body>
+</html>
