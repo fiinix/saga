@@ -95,7 +95,6 @@
 	<textarea class="editor" name="editor" id="editor" cols="30" rows="10">Hello Dave...</textarea>
 	</div> -->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script>
 $(function() {
 
@@ -132,6 +131,7 @@ $(function() {
 	counter.click(function() {
 		body.toggleClass('day-mode');
 	});
+<script src="scripts/vendor/jquery/jquery-2.1.0.min.js"></script>
 
 	// paste sort of doesn't work because it can't count child elements without containers. I don't care for now.
 	editor.on('keyup propertychange paste', function(){ 
