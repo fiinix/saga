@@ -2,57 +2,44 @@
 	"use strict";
 
 	App.Core = function() {
+		this.counter = null;
+		this.editor = null;
+
 		this.initialize = function() {
-			this.now = new Date(),
-			this.currentHour = now.getHours(),
-			this.body = $('body'),
-			this.editor = $('.editor'),
 			this.counter = $('.counter');
-
-			if (this.currentHour >= 6 && this.currentHour <= 18) {
-				this.body.addClass('day-mode');
-			}
-
-			this.wordCount();
+			this.editor = new App.Editor.Editor($('.editor'));
+			
+			this.setMode(true);
+			
 			this.setupEvents();
 		};
 
+		this.setMode = function(auto) {
+			if(auto !== undefined && auto === true) {
+				var currentHour = new Date().getHours();
+				if (currentHour >= 6 && currentHour <= 18) {
+					$('body').addClass('day-mode');
+				}
+			}
+
+			$('body').toggleClass('day-mode');
+		}
+
 		this.setupEvents = function() {
-			this.counter.on(
-				'click',
-				function() {
-					this.body.toggleClass('day-mode');
+			this.editor.on(
+				'change',
+				function(stats) {
+					this.counter.html(stats.words + " words &nbsp;&bull;&nbsp; " + stats.characters + " characters");
 				}.bind(this)
 			);
+			this.editor.element.trigger('keyup');
 
-			this.editor.on(
-				'keyup propertychange paste',
-				function(){ 
-					this.wordCount();
-				}.bind(this)
+			this.counter.on(
+				'click',
+				this.setMode.bind(this)
 			);
 
 		};
-
-		this.wordCount = function() {
-			var content_div = this.editor,
-			content_text,
-			char_count = content_div.text().length,
-			word_count = 0;
-
-			// if no characters, words = 0
-			if (char_count != 0)
-			content_div.children().each(function(index, el) {
-			content_text += $(el).text()+"\n";
-			});
-			// if there is content, splits the text at spaces (else displays 0 words)
-
-			if (typeof content_text !== "undefined")
-			word_count = content_text.split(/\s+/).length -1;
-			// words_count = content_text.trim().replace(/\s+/, ' ').split(' ').length;
-			this.counter.html(word_count + " words &nbsp;&bull;&nbsp; " + char_count + " characters");
-		}
-
 
 		this.initialize();
 	}
