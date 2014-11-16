@@ -27,6 +27,15 @@
 			);
 		};
 
+		this.content = function(content) {
+			if(content === undefined) {
+				return this.element.html(); 
+			}
+
+			this.element.html(content);
+			this.element.trigger('keyup');
+		};
+
 		this.wordCount = function() {
 			var content_text,
 			char_count = this.element.text().length,
