@@ -95,51 +95,16 @@
 	<textarea class="editor" name="editor" id="editor" cols="30" rows="10">Hello Dave...</textarea>
 	</div> -->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script>
-$(function() {
+<script src="scripts/global.js"></script>
 
-	var now = new Date(),
-		currentHour = now.getHours(),
-		body = $('body'),
-		editor = $('.editor'),
-		counter = $('.counter');
+<script src="scripts/vendor/jquery/jquery-2.1.0.min.js"></script>
 
-	if (currentHour >= 6 && currentHour <= 18)
-		body.addClass('day-mode');
+<script src="scripts/saga/Handlers/EventExecutable.js"></script>
+<script src="scripts/saga/Handlers/Storage.js"></script>
+<script src="scripts/saga/Editor/Editor.js"></script>
+<script src="scripts/saga/Core.js"></script>
 
-	function wordCount() {
-		var content_div = editor,
-		content_text,
-		char_count = content_div.text().length,
-		word_count = 0;
-
-		// if no characters, words = 0
-		if (char_count != 0)
-		content_div.children().each(function(index, el) {
-		content_text += $(el).text()+"\n";
-		});
-		// if there is content, splits the text at spaces (else displays 0 words)
-
-		if (typeof content_text !== "undefined")
-		word_count = content_text.split(/\s+/).length -1;
-		// words_count = content_text.trim().replace(/\s+/, ' ').split(' ').length;
-		counter.html(word_count + " words &nbsp;&bull;&nbsp; " + char_count + " characters");
-	}
-
-	wordCount();
-
-	counter.click(function() {
-		body.toggleClass('day-mode');
-	});
-
-	// paste sort of doesn't work because it can't count child elements without containers. I don't care for now.
-	editor.on('keyup propertychange paste', function(){ 
-		wordCount();
-	});
-
-});
-</script>
+<script src="scripts/bootstrap.js"></script>
 
 </body>
 </html>
